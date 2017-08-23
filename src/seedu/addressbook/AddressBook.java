@@ -469,6 +469,7 @@ public class AddressBook {
      * @return set of keywords as specified by args
      */
     private static Set<String> extractKeywordsFromFindPersonArgs(String findPersonCommandArgs) {
+        findPersonCommandArgs = changeToLowercase(findPersonCommandArgs);
         return new HashSet<>(splitByWhitespace(findPersonCommandArgs.trim()));
     }
 
@@ -481,7 +482,8 @@ public class AddressBook {
     private static ArrayList<HashMap<String,String>> getPersonsWithNameContainingAnyKeyword(Collection<String> keywords) {
         final ArrayList<HashMap<String,String>> matchedPersons = new ArrayList<>();
         for (HashMap<String,String> person : getAllPersonsInAddressBook()) {
-            final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person)));
+            String personName = changeToLowercase(getNameFromPerson(person));
+            final Set<String> wordsInName = new HashSet<>(splitByWhitespace(personName));
             if (!Collections.disjoint(wordsInName, keywords)) {
                 matchedPersons.add(person);
             }
@@ -618,6 +620,20 @@ public class AddressBook {
         for (String m : message) {
             System.out.println(LINE_PREFIX + m);
         }
+    }
+
+    /************************ Learn varargs **********************/
+    /**
+     * Varargs allows the method to accept 0 or multiple args
+     * If we don't use Varargs, we need to overload methods
+     */
+    private static void showToUser(String message){
+        System.out.println(LINE_PREFIX + message);
+    }
+
+    private static void showToUser(String message1, String message2){
+        System.out.println(LINE_PREFIX + message1);
+        System.out.println(LINE_PREFIX + message2);
     }
 
     /**
@@ -1147,8 +1163,10 @@ public class AddressBook {
      * @return  string without the sign
      */
     private static String removePrefixSign(String s, String sign) {
+
         return s.replace(sign, "");
     }
+
 
     /**
      * Splits a source string into the list of substrings that were separated by whitespace.
@@ -1159,5 +1177,16 @@ public class AddressBook {
     private static ArrayList<String> splitByWhitespace(String toSplit) {
         return new ArrayList<>(Arrays.asList(toSplit.trim().split("\\s+")));
     }
+
+    /**
+     * Change all the characters in the source string to lowercase
+     * @param sourceString source string
+     * @return change to lower case
+     */
+
+    private static String changeToLowercase(String sourceString){
+        return sourceString.toLowerCase();
+    }
+
 
 }
