@@ -649,12 +649,21 @@ public class AddressBook {
     }
 
     private static int extractTargetIndexFromEditPersonArgs(String rawArgs) {
-        return Integer.parseInt(rawArgs.substring(0, 1));
+        try{
+            return Integer.parseInt(rawArgs.substring(0, 1));
+        }catch(StringIndexOutOfBoundsException error){
+            return -1;
+        }
     }
 
 
     private static String extractPersonInfoFromEditPersonArgs(String rawArgs) {
-        return rawArgs.substring(1);
+        try{
+            return rawArgs.substring(1);
+        }catch(StringIndexOutOfBoundsException error){
+            return MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+        }
+
     }
 
     private static void editPersonFromAddressBook(HashMap<String, String> exactPerson, String updatedPersonInfo) {
@@ -666,6 +675,7 @@ public class AddressBook {
         exactPerson.put(PERSON_PROPERTY_EMAIL, email);
         savePersonsToFile(getAllPersonsInAddressBook(), storageFilePath);
     }
+
 
     private static String getMessageForSuccessfulEdited(HashMap<String, String> editedPerson) {
         return String.format(MESSAGE_EDIT_PERSON_SUCCESS, getMessageForFormattedPersonData(editedPerson));
