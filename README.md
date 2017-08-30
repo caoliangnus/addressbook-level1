@@ -73,6 +73,23 @@ Examples:
 * `add John Doe p/98765432 e/johnd@gmail.com`
 * `add Betsy Crowe e/bencrowe@gmail.com p/1234567 `
 
+#### Editing a person: `edit`
+> Edits a person in the address book
+
+Format: `edit INDEX NAME p/PHONE_NUMBER e/EMAIL`  
+> Words in `UPPER_CASE` are the parameters<br>
+  The index refers to the index numbers shown in the most recent listing. Phone number and email can be in any order but the name must come first.
+  These are the updated information.
+
+Examples: 
+* `list`<br>
+  `edit 2 John Doe p/98765432 e/johnd@gmail.com`
+  > Edit and update the 2nd person in the address book.
+* `find Betsy` <br> 
+  `edit 1 Betsy Crowe e/bencrowe@gmail.com p/1234567 `
+  > Edit and update the 1st person in the address book.
+  
+
 #### Listing all persons: `list`
 
 > Shows a list of persons, as an indexed list, in the order they were added to the address book, 
@@ -84,12 +101,15 @@ Format: `list`
 > Finds persons that match given keywords
 
 Format: `find KEYWORD [MORE_KEYWORDS]`  
-> The search is case sensitive, the order of the keywords does not matter, only the name is searched, 
+> The search is case insensitive, the order of the keywords does not matter, only the name is searched, 
 and persons matching at least one keyword will be returned (i.e. `OR` search).
 
 Examples: 
 * `find John`
-  > Returns `John Doe` but not `john`
+  > Returns `John Doe` 
+  
+* `find john`
+  > Return `John Doe`  
    
 * `find Betsy Tim John`
   > Returns Any person having names `Betsy`, `Tim`, or `John`
@@ -108,6 +128,15 @@ Examples:
 * `find Betsy` <br> 
   `delete 1`
   > Deletes the 1st person in the results of the `find` command.
+  
+#### Sorting the list: `sort`
+> Sort all entries from the address book based on alphabetical order  
+Format: `sort`    
+
+Examples: 
+* `sort`
+  > Betsy Crowe p/1234567  e/bencrowe@gmail.com   
+  > John Doe p/98765432 e/johnd@gmail.com
 
 #### Clearing all entries: `clear`
 > Clears all entries from the address book.  
